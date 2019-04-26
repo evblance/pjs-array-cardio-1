@@ -147,6 +147,13 @@ request.send();
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
+const sortedByLastNameInventors = [...inventors];
+sortedByLastNameInventors.sort(
+  (prev, next) => {
+    return next.last > prev.last ? -1 : 1;
+  }
+);
+console.log(sortedByLastNameInventors);
 
 // 8. Reduce Exercise
 // Sum up the instances of each of these
