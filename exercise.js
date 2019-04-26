@@ -68,6 +68,12 @@ console.log(inventorsBefore1500s);
 
 // Array.prototype.map()
 // 2. Give us an array of the inventors' first and last names
+const inventorsFirstAndLastNames = inventors.map(
+  (inventor) => {
+    return [{ firstname: inventor.first }, { lastname: inventor.last} ];
+  }
+);
+console.log(inventorsFirstAndLastNames);
 
 // Array.prototype.sort()
 // 3. Sort the inventors by birthdate, oldest to youngest
