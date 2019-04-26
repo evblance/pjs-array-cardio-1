@@ -158,3 +158,19 @@ console.log(sortedByLastNameInventors);
 // 8. Reduce Exercise
 // Sum up the instances of each of these
 const data = ['car', 'car', 'truck', 'truck', 'bike', 'walk', 'car', 'van', 'bike', 'walk', 'car', 'van', 'car', 'truck' ];
+
+// Construct the initial state of our transport instances object from the data
+let transportObj = {};
+for (type of data) {
+  if (!Object.keys(transportObj).includes(type)) {
+    transportObj = Object.assign(transportObj, { [type]: 0 });
+  }
+}
+
+transportObj = data.reduce(
+  (accumulator, current) => {
+    return Object.assign(accumulator, { [current]: accumulator[current] + 1 });
+  },
+  transportObj
+);
+console.log(transportObj);
