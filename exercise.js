@@ -106,6 +106,44 @@ console.log(sortedByLivedInventors);
 
 // 6. create a list of Boulevards in Paris that contain 'de' anywhere in the name
 // https://en.wikipedia.org/wiki/Category:Boulevards_in_Paris
+let boulevards = [];
+const request = new XMLHttpRequest();
+
+/**
+ * Outputs a list of Boulevards containing 'de' anywhere in the name
+ * from the AJAX request response.
+ */
+const processWikiResults = (request) => {
+    // Make an array of boulevards to manipulate from our response
+    const boulRegExp = new RegExp(/Boulevard*/i);
+    const data = JSON.parse(request.response).query.categorymembers;
+    const titles = data.map(res => res.title);
+    boulevards = titles.filter((title) => {
+      return title.match(boulRegExp);
+    });
+
+    const deRegExp = new RegExp(/de/g);
+    const list = document.createElement('ul');
+    document.body.appendChild(list);
+    const boulevardsToList = boulevards.filter((boulevard) => {
+      return boulevard.match(deRegExp);
+    });
+
+    for (boulevard of boulevardsToList) {
+      const listItem = document.createElement('li');
+      const text = document.createTextNode(boulevard);
+      listItem.appendChild(text);
+      list.appendChild(listItem);
+    }
+};
+
+request.onreadystatechange = () => {
+  if (request.readyState === 4 && request.status === 200) {
+    processWikiResults(request);
+  }
+};
+request.open('GET', 'https://en.wikipedia.org/w/api.php?action=query&origin=*&format=json&list=categorymembers&cmtitle=Category:Boulevards_in_Paris&cmlimit=100');
+request.send();
 
 // 7. sort Exercise
 // Sort the people alphabetically by last name
